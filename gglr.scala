@@ -18,8 +18,8 @@ object gglr {
 
     // Read data into memory in - lazy loading
     val sc = new SparkContext("local[*]","LogisticRegression")
-    val data = sc.textFile("/home/smartcoder/Documents/Developer/workspace/data.txt")
-    println(data.count() + "\n")
+    val data = sc.textFile("/home/smartcoder/Documents/Developer/MSthesisData/*/{[5-9],1[0-5]}_*")
+    println(data.count() + "\n")  
     
     // Prepare data for the logistic regression algorithm
     val parsedData = data.map{line => 
@@ -27,7 +27,7 @@ object gglr {
         LabeledPoint((parts(5)).toDouble, Vectors.dense(parts.slice(0,5).map(x => x.toDouble)))
     }
     
-    println(parsedData.take(3).mkString("\n"))
+    //println(parsedData.take(3).mkString("\n"))
     
     // Split data into training (60%) and test (40%)
     val splits = parsedData.randomSplit(Array(0.8, 0.2), seed = 11L)
